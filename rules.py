@@ -29,16 +29,11 @@ EXPR_GRAMMAR = {
         ["<SelectionSet>",""],
     "<Alias>":
         ["<Name> : "],
-    "<Arguments_Const>":
-        ["( <ArgumentList_Const>) "],
     "<Arguments>":
         ["( <ArgumentList> )"],
     "<ArgumentList>":
         ["<Argument>","<Argument>, <ArgumentList>"],
-    "<ArgumentList_Const>":
-        ["<Argument_Const>","<Argument_Const>, <ArgumentList_Const>"],
-    "<Argument_Const>":
-        ["<Name> : <Value_Const>"],
+    
     "<Argument>":
         ["<Name> : <Value>"],
     "<FragmentSpread>":
@@ -54,13 +49,11 @@ EXPR_GRAMMAR = {
     "<TypeCondition>":
         ["on <NamedType>"],
     "<Value>":
-        ["<Variable>","<IntValue>","<FloatValue>","<StringValue>","<BooleanValue>","<NullValue>","<EnumValue>","<ListValue>","<ObjectValue>"],
+        ["<Variable>","<IntValue>","<FloatValue>","<StringValue>","<BooleanValue>","<EnumValue>","<ListValue>","<ObjectValue>"],
     "<Value_Const>":
-        ["<IntValue>","<FloatValue>","<StringValue>","<BooleanValue>","<NullValue>","<EnumValue>","<ListValue_Const>","<ObjectValue_Const>"],
+        ["<IntValue>","<FloatValue>","<StringValue>","<BooleanValue>","<EnumValue>","<ListValue_Const>","<ObjectValue_Const>"],
     "<BooleanValue>":
         ["true","false"],
-    "<NullValue>":
-        ["null"],
     "<EnumValue>":
         ["<Name>"],
     "<ListValue>":
@@ -91,8 +84,6 @@ EXPR_GRAMMAR = {
         ["<Variable> : <Type> <DefaultValueOPT>"],
     "<DefaultValueOPT>":
         ["","<DefaultValue>"],
-    "<DirectivesOPT_Const>":
-        ["","<Directive_Const>"],
     "<Variable>":
         ["$<Name>"],
     "<DefaultValue>":
@@ -105,113 +96,12 @@ EXPR_GRAMMAR = {
         ["[ <Type> ]"],
     "<NonNullType>":
         ["<NamedType> !", "<ListType> !"],
-    "<Directives_Const>":
-        ["<Directive_Const>", "<Directive_Const> <Directives_Const>"],
     "<Directives>":
         ["<Directive>", "<Directive> <Directives>"],
     "<Directive>":
         ["@ <Name> <ArgumentsOPT>"],
-    "<Directive_Const>":
-        ["@ <Name> <ArgumentsOPT_Const>"],
-    "<ArgumentsOPT_Const>":
-        ["","<Arguments_Const>"],
-    "<TypeSystemDefinition>":
-        ["<SchemaDefinition>","<TypeDefinition>","<DirectiveDefinition>"],
-    "<TypeSystemExtension>":
-        ["<SchemaExtension>","<TypeExtension>"],
-    "<SchemaDefinition>":
-        ["<DescriptionOPT> schema <DirectivesOPT_Const> { <RootOperationTypeDefinitions> }"],
-    "<DescriptionOPT>":
-        ["","<Description>"],
-    "<RootOperationTypeDefinitions>":
-        ["<RootOperationTypeDefinition>", "<RootOperationTypeDefinition>\n<RootOperationTypeDefinitions>"],
-    "<SchemaExtension>":
-        ["extend schema <DirectivesOPT_Const> { <RootOperationTypeDefinitions> }","extend schema <Directives_Const>"],
-    "<RootOperationTypeDefinition>":
-        ["<OperationType> : <NamedType>"],
-    "<Description>":
-        ["<StringValue>"],
-    "<TypeDefinition>":
-        ["<ScalarTypeDefinition>","<ObjectTypeDefinition>","<InterfaceTypeDefinition>","<UnionTypeDefinition>","<EnumTypeDefinition>","<InputObjectTypeDefinition>"],
-    "<TypeExtension>":
-        ["<ScalarTypeExtension>","<ObjectTypeExtension>","<InterfaceTypeExtension>","<UnionTypeExtension>","<EnumTypeExtension>","<InputObjectTypeExtension>"],
-    "<ScalarTypeDefinition>":
-        ["<DescriptionOPT> scalar <Name> <DirectivesOPT_Const>"],
-    "<ScalarTypeExtension>":
-        ["extend scalar <Name> <Directives_Const>"],
-    "<ObjectTypeDefinition>":
-        ["<DescriptionOPT> type <Name> <ImplementsInterfacesOPT> <DirectivesOPT_Const> <FieldsDefinitionOPT>"],
-    "<ImplementsInterfacesOPT>":
-        ["","<ImplementsInterfaces>"],
-    "<FieldsDefinitionOPT>":
-        ["","<FieldsDefinition>"],
-    "<ObjectTypeExtension>":
-        ["extend type <Name> <ImplementsInterfacesOPT> <DirectivesOPT_Const> <FieldsDefinition>",
-        "extend type <Name> <ImplementsInterfacesOPT> <Directives_Const>",
-        "extend type <Name> <ImplementsInterfaces>"],
-    "<ImplementsInterfaces>":
-        ["<ImplementsInterfaces> & <NamedType>","implements & <NamedType>", "implements <NamedType>"],
-    "<FieldsDefinition>":
-        ["{ <FieldDefinitions> }"],
-    "<FieldDefinitions>":
-        ["<FieldDefinition>","<FieldDefinition>\n<FieldDefinitions>"],
-    "<FieldDefinition>":
-        ["<DescriptionOPT> <Name> <ArgumentsDefinitionOPT> : <Type> <DirectivesOPT_Const>"],
-    "<ArgumentsDefinitionOPT>":
-        ["","<ArgumentsDefinition>"],
-    "<ArgumentsDefinition>":
-        ["( <InputValueDefinitions> )"],
-    "<InputValueDefinitions>":
-        ["<InputValueDefinition>","<InputValueDefinition>, <InputValueDefinitions>"],
-    "<InputValueDefinition>":
-        ["<DescriptionOPT> <Name> : <Type> <DefaultValueOPT> <DirectivesOPT_Const>"],
-    "<InterfaceTypeDefinition>":
-        ["<DescriptionOPT> interface <Name> <ImplementsInterfacesOPT> <DirectivesOPT_Const> <FieldsDefinitionOPT>"],
-    "<InterfaceTypeExtension>":
-        ["extend interface <Name> <ImplementsInterfacesOPT> <DirectivesOPT_Const> <FieldsDefinition>",
-        "extend interface <Name> <ImplementsInterfacesOPT> <Directives_Const>",
-        "extend interface <Name> <ImplementsInterfaces>"],
-    "<UnionTypeDefinition>":
-        ["<DescriptionOPT> union <Name> <DirectivesOPT_Const> <UnionMemberTypesOPT>"],
-    "<UnionMemberTypesOPT>":
-        ["", "<UnionMemberTypes>"],
-    "<UnionMemberTypes>":
-        ["<UnionMemberTypes> | <NamedType>","= | <NamedType>","= <NamedType>"],
-    "<UnionTypeExtension>":
-        ["extend union <Name> <DirectivesOPT_Const> <UnionMemberTypes>","extend union <Name> <Directives_Const>"],
-    "<EnumTypeDefinition>":
-        ["<DescriptionOPT> enum <Name> <DirectivesOPT_Const> <EnumValuesDefinitionOPT>"],
-    "<EnumValuesDefinitionOPT>":
-        ["","EnumValuesDefinition"],
-    "<EnumValuesDefinition>":
-        ["{ <EnumValueDefinitions> }"],
-    "<EnumValueDefinitions>":
-        ["<EnumValueDefinition>","<EnumValueDefinition>\n<EnumValueDefinitions>"],
-    "<EnumValueDefinition>":
-        ["<DescriptionOPT> <EnumValue> <DirectivesOPT_Const>"],
-    "<EnumTypeExtension>":
-        ["extend enum <Name> <DirectivesOPT_Const> <EnumValuesDefinition>","extend enum <Name> <Directives_Const>"],
-    "<InputObjectTypeDefinition>":
-        ["<DescriptionOPT> input <Name> <DirectivesOPT_Const> <InputFieldsDefinitionOPT>"],
-    "<InputFieldsDefinitionOPT>":
-        ["","<InputFieldsDefinition>"],
-    "<InputFieldsDefinition>":
-        ["{ <InputValueDefinitions> }"],
-    "<InputValueDefinitions>":
-        ["<InputValueDefinition>","<InputValueDefinition>\n<InputValueDefinitions>"],
-    "<InputObjectTypeExtension>":
-        ["extend input <Name> <DirectivesOPT_Const> <InputFieldsDefinition>","extend input <Name> <Directives_Const>"],
-    "<DirectiveDefinition>":
-        ["<DescriptionOPT> directive @ <Name> <ArgumentsDefinitionOPT> repeatable on <DirectiveLocations>",
-        "<DescriptionOPT> directive @ <Name> <ArgumentsDefinitionOPT> on <DirectiveLocations>"],
-    "<DirectiveLocations>":
-        ["<DirectiveLocations> | <DirectiveLocation>","<DirectiveLocation>","| <DirectiveLocation>"],
-    "<DirectiveLocation>":
-        ["<ExecutableDirectiveLocation>","<TypeSystemDirectiveLocation>"],
-    "<ExecutableDirectiveLocation>":
-        ["QUERY","MUTATION","SUBSCRIPTION","FIELD","FRAGMENT_DEFINITION","FRAGMENT_SPREAD","INLINE_FRAGMENT","VARIABLE_DEFINITION"],
-    "<TypeSystemDirectiveLocation>":
-        ["SCHEMA","SCALAR","OBJECT","FILED_DEFINITION","ARGUMENT_DEFINITION","INTERFACE","UNION","ENUM","ENUM_VALUE","INPUT_OBJECT","INPUT_FILED_DEFINITION"],
+
+
     "<Name>":
         ["<NameStart><NameContinuesOPT>"],
     "<NameStart>":
@@ -255,8 +145,6 @@ EXPR_GRAMMAR = {
         ["+","-"],
     "<StringValue>":
         ["\"\"","\"<StringCharacters>\""],
-    "<StringCharactersOPT>":
-        ["","<StringCharacters>"],
     "<StringCharacters>":
         ["<StringCharacter>","<StringCharacter><StringCharacters>"],
     "<StringCharacter>":
